@@ -288,7 +288,7 @@ Italian Designer Michele de Lucchi created an a piece of sculpture with this aes
 
 <p>The parameter r represent radius of the base circle of the cylinder, the parameter h represent the height of the cylinder. Is first created the profile of the cylinder with BEZIER function and then rotated with ROTATIONAL_SURFACE function.</p>
 </li>
-</ul><p>Instead, for the central part of the table, which is striped, I used two times the function SIMPLICIAL_COMPLEX first creating the black lines and then the white ones. I then joined the two sides into a STRUCT and so I got the texture.</p>
+</ul><p>Instead, for the central part of the table, which has oblique stripes, I used two times the function SIMPLICIAL_COMPLEX first creating the black lines and then the white ones. I then joined the two sides into a STRUCT and so I got the texture.</p>
 
 <p><img src="http://i42.tinypic.com/9pqhd1.png" alt="texture">
 code:</p>
@@ -335,6 +335,116 @@ code:</p>
 <ul>
 <li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/javascript/flamingo.js">Javascript</a></li>
 <li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/python/flamingo.py">Python</a></li>
+</ul><h3>
+<a name="kristall-table" class="anchor" href="#kristall-table"><span class="octicon octicon-link"></span></a>Kristall table</h3>
+
+<p>Kristall End Table designed in 1981 for Memphis, in plastic laminate, lacquered wood and metal.</p>
+
+<h4>
+<a name="realization-4" class="anchor" href="#realization-4"><span class="octicon octicon-link"></span></a>Realization</h4>
+
+<p>For some part of the table I've used this funcion:</p>
+
+<ul>
+<li>
+<p><strong>CYLINDER</strong>: this funtion draws a cylinder using BEZIER CURVES and ROTATIONAL_SURFACE</p>
+
+<pre><code>function CYLINDER(r,h){
+    var rot_domain = DOMAIN([[0,1],[0,2*PI]])([40,40]);
+    var p1 = [[0,0,0],[r,0,0]];
+    var p2 = [[r,0,0],[r,0,h]];
+    var p3 = [[r,0,h],[0,0,h]];
+    var c1 = BEZIER(S0)(p1);
+    var c2 = BEZIER(S0)(p2);
+    var c3 = BEZIER(S0)(p3);
+    var s1 = MAP(ROTATIONAL_SURFACE(c1))(rot_domain);
+    var s2 = MAP(ROTATIONAL_SURFACE(c2))(rot_domain);
+    var s3 = MAP(ROTATIONAL_SURFACE(c3))(rot_domain);
+    var cylinder = STRUCT([s1,s2,s3]);
+    return cylinder;
+};
+</code></pre>
+
+<p>The parameter r represent radius of the base circle of the cylinder, the parameter h represent the height of the cylinder. Is first created the profile of the cylinder with BEZIER function and then rotated with ROTATIONAL_SURFACE function.</p>
+</li>
+</ul><p>Instead, for the central part of the table, which has oblique stripes, I used two times the function SIMPLICIAL_COMPLEX first creating the black lines and then the white ones. I then joined the two sides into a STRUCT and so I got the texture.</p>
+
+<p><img src="http://i39.tinypic.com/i5xkqv.png" alt="texture">
+code:</p>
+
+<pre><code>    var points1 = [/*prima fila*/[0,0,0],[0.5,0,0],[1,0,0],[1.5,0,0],[2,0,0],[2.5,0,0],
+[3,0,0],[3.5,0,0],[4,0,0],[4.5,0,0],[5,0,0],
+/*seconda fila*/[0,0.5,0],[5,0.5,0],
+/*terza fila*/[0,1,0],[5,1,0],
+/*quarta fila*/[0,1.5,0],[5,1.5,0],
+/*quinta fila*/[0,2,0],[5,2,0],
+/*sesta fila*/[0,2.5,0],[5,2.5,0],
+/*settima fila*/[0,3,0],[5,3,0],
+/*ottava fila*/[0,3.5,0],[5,3.5,0],
+/*nona fila*/[0,4,0],[5,4,0],
+/*decima fila*/[0,4.5,0],[5,4.5,0],
+/*undicesima fila*/[0,5,0],[5,5,0],
+/*dodicesima fila*/[0,5.5,0],[5,5.5,0],
+/*tredicesima fila*/[0,6,0],[5,6,0],
+/*quattordicesima fila*/[0,6.5,0],[5,6.5,0],
+/*quindicesima fila*/[0,7,0],[5,7,0],
+/*sedicesima fila*/[0,7.5,0],[0.5,7.5,0],[1,7.5,0],[1.5,7.5,0],[2,7.5,0],[2.5,7.5,0],
+[3,7.5,0],[3.5,7.5,0],[4,7.5,0],[4.5,7.5,0],[5,7.5,0]];
+
+var points2 = [/*prima fila*/[0,0,0],[0.5,0,0],[1,0,0],[1.5,0,0],[2,0,0],[2.5,0,0],
+[3,0,0],[3.5,0,0],[4,0,0],[4.5,0,0],[5,0,0],
+/*seconda fila*/[0,0.5,0],[5,0.5,0],
+/*terza fila*/[0,1,0],[5,1,0],
+/*quarta fila*/[0,1.5,0],[5,1.5,0],
+/*quinta fila*/[0,2,0],[5,2,0],
+/*sesta fila*/[0,2.5,0],[5,2.5,0],
+/*settima fila*/[0,3,0],[5,3,0],
+/*ottava fila*/[0,3.5,0],[5,3.5,0],
+/*nona fila*/[0,4,0],[5,4,0],
+/*decima fila*/[0,4.5,0],[5,4.5,0],
+/*undicesima fila*/[0,5,0],[0.5,5,0],[1,5,0],[1.5,5,0],[2,5,0],[2.5,5,0],
+[3,5,0],[3.5,5,0],[4,5,0],[4.5,5,0],[5,5,0]];
+
+var cells1 = [[1,11,13],[1,13,2],[3,15,17],[3,17,4],[5,19,21],[5,21,6],[7,23,25],[7,25,8],
+[9,27,29],[9,29,10],[12,31,33],[12,33,14],[16,35,37],[16,37,18],
+[20,39,40],[20,40,22],[24,41,42],[24,42,26],[28,43,44],[28,44,30],[32,45,46],
+[32,46,34],[36,47,48],[36,48,38]];
+var s1 = COLOR([0,0,0])(SIMPLICIAL_COMPLEX(points1)(cells1));
+var cells2 = [[0,1,11],[2,13,15],[2,15,3],[4,17,19],[4,19,5],[6,21,23],[6,23,7],
+[8,25,27],[8,27,9],[10,29,31],[10,31,12],[14,33,35],[14,35,16],[18,37,39],
+[18,39,20],[22,40,41],[22,41,24],[26,42,43],[26,43,28],[30,44,45],[30,45,32],
+[34,46,47],[34,47,36],[38,48,49]];
+var s2 = COLOR([255,255,255])(SIMPLICIAL_COMPLEX(points1)(cells2));
+
+var cells3 = [[1,11,13],[1,13,2],[3,15,17],[3,17,4],[5,19,21],[5,21,6],[7,23,25],[7,25,8],
+[9,27,29],[9,29,10],[12,30,31],[12,31,14],[16,32,33],[16,33,18],[20,34,35],[20,35,22],
+[24,36,37],[24,37,26],[28,38,39]];
+var s3 = COLOR([0,0,0])(SIMPLICIAL_COMPLEX(points2)(cells3));
+var cells4 = [[0,1,11],[2,13,15],[2,15,3],[4,17,19],[4,19,5],[6,21,23],[6,23,7],
+[8,25,27],[8,27,9],[10,29,30],[10,30,12],[14,31,32],[14,32,16],[18,33,34],[18,34,20],
+[22,35,36],[22,36,24],[26,37,38],[26,38,28]];
+var s4 = COLOR([255,255,255])(SIMPLICIAL_COMPLEX(points2)(cells4));
+
+var surface1 = STRUCT([s1,s2]);
+var surface2 = R([0,2])(-PI/2)(surface1);
+var surface3 = T([2])([5])(STRUCT([s1,s2]));
+var surface4 = T([0])([5])(surface2);
+var surface5 = R([1,2])(PI/2)(STRUCT([s3,s4]));
+var surface6 = T([0,1,2])([5,7.5,5])(R([0,1])(PI)(R([1,2])(PI)(surface5)));
+var block = STRUCT([surface1,surface2,surface3,surface4,surface5,surface6]);
+</code></pre>
+
+<h4>
+<a name="photos-and-screenshots-4" class="anchor" href="#photos-and-screenshots-4"><span class="octicon octicon-link"></span></a>Photos and Screenshots</h4>
+
+<p><img src="http://i43.tinypic.com/ao03z6.jpg" alt="photo1"><img src="http://i40.tinypic.com/nv1x83.png" alt="screenshot1"><img src="http://i44.tinypic.com/a4h0n.jpg" alt="photo2"><img src="http://i42.tinypic.com/35c2xsp.png" alt="screenshot2"></p>
+
+<h4>
+<a name="links-to-the-code-on-github-4" class="anchor" href="#links-to-the-code-on-github-4"><span class="octicon octicon-link"></span></a>Links to the code on github</h4>
+
+<ul>
+<li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/javascript/kristall.js">Javascript</a></li>
+<li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/python/kristall.py">Python</a></li>
 </ul>
       </section>
       <footer>
