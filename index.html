@@ -445,6 +445,132 @@ var block = STRUCT([surface1,surface2,surface3,surface4,surface5,surface6]);
 <ul>
 <li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/javascript/kristall.js">Javascript</a></li>
 <li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/python/kristall.py">Python</a></li>
+</ul><h3>
+<a name="polar-coffee-table" class="anchor" href="#polar-coffee-table"><span class="octicon octicon-link"></span></a>Polar coffee table</h3>
+
+<p>Polar coffee table designed by in 1984 for Memphis, in plastic laminate and lacquered.</p>
+
+<h4>
+<a name="realization-5" class="anchor" href="#realization-5"><span class="octicon octicon-link"></span></a>Realization</h4>
+
+<p>The realization of this work is based mainly on two funcions:</p>
+
+<ul>
+<li>
+<p><strong>BLOCK</strong>: this funtion draws the central part of the table</p>
+
+<pre><code>var BLOCK = function (n){
+    var c1 = COLOR([255,255,255])(CUBOID([0.1,0,3]));
+    var c2 = COLOR([0,0,0])(CUBOID([0.1,0,3]));
+    var block1 = STRUCT([c1]);
+    var block2 = STRUCT([T([0])([0.1])(c2)]);
+    for (var i = 2; i &lt;= n-1; i++) {
+    if (i%2==0){
+        block1 = STRUCT([block1,T([0])([i/10])(c1)]);
+    }
+    else{
+        block2 = STRUCT([block2,T([0])([i/10])(c2)]);
+    }
+};
+block = STRUCT([block1,block2]);
+return block;
+};
+</code></pre>
+
+<p>The parameter n represent the number of stripes in the central part of the table.</p>
+</li>
+<li>
+<p><strong>CYLINDER</strong>: this funtion draws a cylinder using BEZIER CURVES and ROTATIONAL_SURFACE</p>
+
+<pre><code>function CYLINDER(r,h){
+    var rot_domain = DOMAIN([[0,1],[0,2*PI]])([40,40]);
+    var p1 = [[0,0,0],[r,0,0]];
+    var p2 = [[r,0,0],[r,0,h]];
+    var p3 = [[r,0,h],[0,0,h]];
+    var c1 = BEZIER(S0)(p1);
+    var c2 = BEZIER(S0)(p2);
+    var c3 = BEZIER(S0)(p3);
+    var s1 = MAP(ROTATIONAL_SURFACE(c1))(rot_domain);
+    var s2 = MAP(ROTATIONAL_SURFACE(c2))(rot_domain);
+    var s3 = MAP(ROTATIONAL_SURFACE(c3))(rot_domain);
+    var cylinder = STRUCT([s1,s2,s3]);
+    return cylinder;
+};
+</code></pre>
+
+<p>The parameter r represent radius of the base circle of the cylinder, the parameter h represent the height of the cylinder. Is first created the profile of the cylinder with BEZIER function and then rotated with ROTATIONAL_SURFACE function.</p>
+</li>
+</ul><h4>
+<a name="photos-and-screenshots-5" class="anchor" href="#photos-and-screenshots-5"><span class="octicon octicon-link"></span></a>Photos and Screenshots</h4>
+
+<p><img src="http://i44.tinypic.com/15ry6x5.jpg" alt="photo1"><img src="http://i43.tinypic.com/4ub385.png" alt="screenshot1"><img src="http://i39.tinypic.com/2e0vayr.png" alt="photo2"><img src="http://i41.tinypic.com/205sftk.png" alt="screenshot2"></p>
+
+<h4>
+<a name="links-to-the-code-on-github-5" class="anchor" href="#links-to-the-code-on-github-5"><span class="octicon octicon-link"></span></a>Links to the code on github</h4>
+
+<ul>
+<li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/javascript/polar.js">Javascript</a></li>
+<li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/python/polar.py">Python</a></li>
+</ul><h3>
+<a name="gloria-lamp" class="anchor" href="#gloria-lamp"><span class="octicon octicon-link"></span></a>Gloria lamp</h3>
+
+<p>Michele de Lucchi created this lamp as part of his 'Nature Series'. Michele de Lucchi: 'When lamps fall from the ceiling people always try to protect their eyes from the flash of the bulb and jars of varying shapes and sizes are always made to create romantic and erotic atmospheres. Today however, there are bulbs that do everything by themselves and there is no more need for shades, bells, pans, lids and pots. So not having anywhere left to unload my creativity into except the dangling wire, I decided to decorate it and to unload onto a thin rod all my needs for free expressiveness and uncontrolled imagination. I was very much helped by the sophisticated technology of laser cutting and by the generous performances of botanical and biological science. </p>
+
+<h4>
+<a name="realization-6" class="anchor" href="#realization-6"><span class="octicon octicon-link"></span></a>Realization</h4>
+
+<p>The realization of this work is based mainly on two funcions:</p>
+
+<ul>
+<li>
+<p><strong>SURFACE</strong>: this funtion draws a surface using ROTATIONAL_SURFACE that is a function of the language Plasm.js</p>
+
+<pre><code>var SURFACE = function (p){
+    var points = p;
+    var rot_domain = DOMAIN([[0,1],[0,2*PI]])([40,40]);
+    var c = BEZIER(S0)(points);
+    var surface = MAP(ROTATIONAL_SURFACE(c))(rot_domain);
+    return surface;
+};  
+</code></pre>
+
+<p>The parameter p represent an array of points that describe the Bezier curve which will be rotated to create the surface of interest.</p>
+</li>
+<li>
+<p><strong>CYLINDER</strong>: this funtion draws a cylinder using BEZIER CURVES and ROTATIONAL_SURFACE</p>
+
+<pre><code>function CYLINDER(r,h){
+    var rot_domain = DOMAIN([[0,1],[0,2*PI]])([40,40]);
+    var p1 = [[0,0,0],[r,0,0]];
+    var p2 = [[r,0,0],[r,0,h]];
+    var p3 = [[r,0,h],[0,0,h]];
+    var c1 = BEZIER(S0)(p1);
+    var c2 = BEZIER(S0)(p2);
+    var c3 = BEZIER(S0)(p3);
+    var s1 = MAP(ROTATIONAL_SURFACE(c1))(rot_domain);
+    var s2 = MAP(ROTATIONAL_SURFACE(c2))(rot_domain);
+    var s3 = MAP(ROTATIONAL_SURFACE(c3))(rot_domain);
+    var cylinder = STRUCT([s1,s2,s3]);
+    return cylinder;
+};
+</code></pre>
+
+<p>The parameter r represent radius of the base circle of the cylinder, the parameter h represent the height of the cylinder. Is first created the profile of the cylinder with BEZIER function and then rotated with ROTATIONAL_SURFACE function.</p>
+</li>
+</ul><p>For the branches with the leaves, I first created a leaf with some Bezier curves, then I mirrored and I created a couple of leaves that have replicated and scaled up to compose the entire class.
+<img src="http://i43.tinypic.com/2hr3fok.png" alt="screenshot"></p>
+
+<h4>
+<a name="photos-and-screenshots-6" class="anchor" href="#photos-and-screenshots-6"><span class="octicon octicon-link"></span></a>Photos and Screenshots</h4>
+
+<p><img src="http://i40.tinypic.com/6hi89h.jpg" alt="photo1"><img src="http://i43.tinypic.com/208wvpz.png" alt="screenshot1"></p>
+
+<h4>
+<a name="links-to-the-code-on-github-6" class="anchor" href="#links-to-the-code-on-github-6"><span class="octicon octicon-link"></span></a>Links to the code on github</h4>
+
+<ul>
+<li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/javascript/gloria.js">Javascript</a></li>
+<li><a href="https://github.com/cvdlab-cg/426816/blob/master/final-project/python/gloria.py">Python</a></li>
 </ul>
       </section>
       <footer>
